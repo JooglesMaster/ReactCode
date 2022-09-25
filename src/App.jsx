@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect,memo, } from 'react'
 import './App.css'
 
 function App() {
@@ -27,46 +27,55 @@ function App() {
       }, 1000)
       return () => clearInterval(interval)
     }
-  }, [timerOn])
+  }, [])
+
+
   
-  function SplitQuote(){
-    
+  const SplitQuote = memo(()=>{
     return(    
       hasLoaded? quote.split('').map((char)=><span>{char}</span>): null
     )
-  }
+  })
+    
 
-  function textChange(e){
-      const arrayQuote = quoteDisplayElement.querySelectorAll('span')
-      const arrayValue = e.target.value.split('')
-      
-      
-      arrayQuote.forEach((characterSpan, index) => {
-        const character = arrayValue[index]
-        if (character == null) {
-          characterSpan.classList.remove('correct')
-          characterSpan.classList.remove('incorrect')
-          setCorrect(false)
+  const  textChange = ((e)=>{
 
-        } else if (character === characterSpan.innerText) {
-          characterSpan.classList.add('correct')
-          characterSpan.classList.remove('incorrect')
-        } else {
-          characterSpan.classList.remove('correct')
-          characterSpan.classList.add('incorrect')
-          setCorrect(false)
+    const arrayQuote = quoteDisplayElement.querySelectorAll('span')
+    const arrayValue = e.target.value.split('')
+    
+    
+    arrayQuote.forEach((characterSpan, index) => {
+      const character = arrayValue[index]
+      if (character == null) {
+        characterSpan.classList.remove('correct')
+        characterSpan.classList.remove('incorrect')
+        setCorrect(false)
 
-        }
-      })
+      } else if (character === characterSpan.innerText) {
+        characterSpan.classList.add('correct')
+        characterSpan.classList.remove('incorrect')
+      } else {
+        characterSpan.classList.remove('correct')
+        characterSpan.classList.add('incorrect')
+        setCorrect(false)
 
-      if(e.target.value === quote){
-        setTimerOn(false)
-        setCorrect(true)
-        e.target.value = null
       }
+    })
+
+    if(e.target.value === quote){
+
+      // setTimerOn(false)
+      setTime(time => time = 0)
+      setCorrect(true)
+      e.target.value = null
+    }
 
 
-  }
+  })
+
+
+
+  
 
   return (
     <div className="App">
