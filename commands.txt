@@ -1,0 +1,4 @@
+npm create vite@latest app-name -- --template react
+
+npm run dev
+ctrl c to cancel !
