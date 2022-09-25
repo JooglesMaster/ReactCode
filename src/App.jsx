@@ -36,7 +36,7 @@ function App() {
       hasLoaded? quote.split('').map((char)=><span>{char}</span>): null
     )
   })
-  console.log('yo there is a change!')
+
 
   const  textChange = ((e)=>{
 
